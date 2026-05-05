@@ -1,0 +1,21 @@
+import numpy as np
+from tensorflow.keras.models import load_model
+from tensorflow.keras.preprocessing.image import load_img, img_to_array
+
+
+model = load_model("models/crop_model.h5")
+
+
+classes = ["healthy", "disease1", "disease2"]
+
+
+img_path = "test.jpg"
+
+img = load_img(img_path, target_size=(128, 128))
+img = img_to_array(img)
+img = img / 255.0
+img = np.expand_dims(img, axis=0)
+
+prediction = model.predict(img)
+
+print("Predicted Class:", classes[np.argmax(prediction)])
